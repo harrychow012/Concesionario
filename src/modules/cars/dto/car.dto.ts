@@ -5,7 +5,6 @@ import {
   IsOptional,
   IsPositive,
   IsString,
-  Min,
   MinLength,
 } from 'class-validator';
 
@@ -18,39 +17,40 @@ export class CreateCarDto {
   @IsString()
   @MinLength(3)
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty() // Asegúrate de que ApiProperty esté aquí
   brand?: string;
 
   @IsString()
   @MinLength(3)
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty() // Asegúrate de que ApiProperty esté aquí
   model?: string;
 
   @IsString()
   @MinLength(3)
-  @ApiProperty()
+  @ApiProperty() // Este campo es obligatorio, así que no debería ser opcional
   description: string;
 
   @IsInt()
   @IsPositive()
-  @ApiProperty()
+  @IsOptional()
+  @ApiProperty() // Asegúrate de que ApiProperty esté aquí
   year?: number;
 
-  @IsNumber()
+  @IsInt()
   @IsPositive()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty() // Asegúrate de que ApiProperty esté aquí
   stock?: number;
 
   @IsNumber()
   @IsPositive()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty() // Asegúrate de que ApiProperty esté aquí
   price?: number;
 
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty() // Asegúrate de que ApiProperty esté aquí
   isAvailable?: boolean;
 }
 

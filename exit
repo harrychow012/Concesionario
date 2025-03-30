@@ -1,0 +1,5 @@
+ id | brand | model |                                      description                                      | year | stock | price | isAvailable 
+----+-------+-------+---------------------------------------------------------------------------------------+------+-------+-------+-------------
+  1 | Ford  | F-150 | Pickup icónica, motor V6 3.5L Turbo (290 HP), capacidad de remolque hasta 13,000 lbs. | 2023 |    12 | 45000 | t
+(1 fila)
+
