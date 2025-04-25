@@ -81,6 +81,14 @@ export class BrandsService {
       deletedAt: new Date(),
     };
   }
+  async deleteAllBrands() {
+    const query = this.brandRepository.createQueryBuilder('brand');
+    try {
+      return await query.delete().where({}).execute();
+    } catch (error) {
+      this.handleDBException(error);
+    }
+  }
 
   private handleDBException(error: any) {
     if (error.code === '23505') throw new BadRequestException(error.detail);
