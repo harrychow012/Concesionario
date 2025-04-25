@@ -122,6 +122,14 @@ export class CarsService {
       deletedAt: new Date(),
     };
   }
+  async deleteAllCars() {
+    const query = this.carRepository.createQueryBuilder('car');
+    try {
+      return await query.delete().where({}).execute();
+    } catch (error) {
+      this.handleDBException(error);
+    }
+  }
 
   private handleDBException(error: any) {
     if (error.code === '23505') throw new BadRequestException(error.detail);
