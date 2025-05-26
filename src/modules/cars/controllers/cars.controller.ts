@@ -4,27 +4,21 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
   Put,
   Query,
 } from '@nestjs/common';
 import { CarsService } from '../services/cars.service';
-import { CreateCarDto, UpdateCarDto, FilterCarDto } from '../dto/car.dto';
+import { CreateCarDto, UpdateCarDto } from '../dto/car.dto';
+import { PaginationDto } from '../../../common/dtos/pagination.dto';
 
 @Controller('cars')
 export class CarsController {
   constructor(private readonly carsService: CarsService) {}
 
   @Get()
-  async getFindAll(@Query() params: FilterCarDto) {
-    // console.log(paginationDto);
-    const rows = await this.carsService.findAll(params);
-
-    const data = {
-      data: rows,
-    };
-    return data;
+  async getFindAll(@Query() paginationDto: PaginationDto) {
+    return this.carsService.findAll(paginationDto);
   }
 
   @Post()
