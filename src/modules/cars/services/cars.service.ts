@@ -5,12 +5,12 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateCarDto, FilterCarDto, UpdateCarDto } from '../dto/car.dto';
+import { CreateCarDto, UpdateCarDto } from '../dto/car.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Car } from '../entities/car.entity';
-import { FindOptionsWhere, ILike, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Brand } from '../../brands/entities/brand.entity';
-
+import { PaginationDto } from '../../../common/dtos/pagination.dto';
 @Injectable()
 export class CarsService {
   private readonly logger = new Logger('CarsService');
@@ -30,23 +30,23 @@ export class CarsService {
   //   });
   // }
 
-  findAll(params?: FilterCarDto) {
-    const { limit, offset, description } = params || {};
-    const where: FindOptionsWhere<Car> = {};
+  async findAll(params?: PaginationDto) {
+    const { limit, offset } = params || {};
 
-    if (description) {
-      where.description = ILike(`%${description}%`);
-    }
+    const take = typeof limit === 'number' ? limit : undefined;
+    const skip = typeof offset === 'number' ? offset : undefined;
 
-    return this.carRepository.find({
+    const [rows, total] = await this.carRepository.findAndCount({
       order: { id: 'ASC' },
-      where,
-      take: limit,
-      skip: offset,
-      relations: {
-        brand: true,
-      },
+      take,
+      skip,
+      relations: { brand: true },
     });
+
+    return {
+      data: rows,
+      total,
+    };
   }
 
   async create(createCarDto: CreateCarDto) {
